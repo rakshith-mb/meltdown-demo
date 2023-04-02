@@ -12,7 +12,11 @@ help () {
     echo
 }
 
-search_word=map_smb_to_linux_error
+debug=0
+
+size=100
+
+search_word=linux_proc_banner
 
 if [[ "$1" == "-w" ]] && [[ "$2" == "sudo" ]];
 then 
@@ -43,7 +47,7 @@ then
         echo
         address=$(sudo cat /proc/kallsyms | grep $search_word | sed 's/ *\([^ ]*\).*/\1/')
         echo "INFO: Linux Proc Header address fetched: $address"
-        ./meltdown $address 20 0
+        ./meltdown $address $size $debug
         vuln=$?
 
         if test $vuln -eq 1; then
